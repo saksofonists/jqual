@@ -1,0 +1,28 @@
+This file is parsed line-by-line and all lines that do not match a very specific format
+are ignored. a.k.a. Everything is a comment unless it matches the format below.
+"/Regex/That/Matches/A/Path/In/Json" = type
+Where the regex is just a regex, nothing fancy, and the type is one of 3:
+- ignore,
+- presence,
+- type
+
+Here are some examples:
+Any differences in SubItem2 or it's existence will be ignored
+"/Item/SubItem2" = ignore
+
+We only check if the item is there, nothing else
+"/Item/SubItem/Key3" = presence
+
+We check if the item is there and it's the same type between files, but we ignore the value
+"/Item/SubItem/Key2" = type
+
+Here are some example regexes:
+
+Ignore Item and anything inside it
+"/Item.*" = ignore
+
+Ignore the value of "Field" in all items inside "List"
+"/List\[.*\]/Field" = presence
+
+Ignore everything. Why would you?
+"/" = ignore

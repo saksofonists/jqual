@@ -1,0 +1,15 @@
+{
+  "Item": {
+    "SubItem": {
+      "Key": "value",
+      "Key2": "value2",
+      "Key3": 1337
+    }
+  },
+  "Item2": [
+    1,
+    2,
+    3,
+    4
+  ]
+}
