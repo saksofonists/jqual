@@ -1,10 +1,11 @@
 This file is parsed line-by-line and all lines that do not match a very specific format
 are ignored. a.k.a. Everything is a comment unless it matches the format below.
 "/Regex/That/Matches/A/Path/In/Json" = type
-Where the regex is just a regex, nothing fancy, and the type is one of 3:
+Where the regex is just a regex, nothing fancy, and the type is one of:
 - ignore,
 - presence,
-- type
+- type,
+- trim
 
 Here are some examples:
 Any differences in SubItem2 or it's existence will be ignored

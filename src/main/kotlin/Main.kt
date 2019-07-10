@@ -40,12 +40,26 @@ fun compareTypes(currentPath: String, j1: Any?, j2: Any?): Boolean {
     return true
 }
 
-fun compareValue(currentPath: String, j1: Any?, j2: Any?) = when (j1) {
-    is JsonArray<*> -> false
-    is JsonObject -> false
-    else -> {
-        if (j1 == j2) true
-        else println("Values at $currentPath differ: \"$j1\" and \"$j2\"").let { false }
+fun compareValue(currentPath: String, j1: Any?, j2: Any?, trim: Boolean): Boolean {
+    var proc1 = j1
+    var proc2 = j2
+
+    if (trim) {
+        if (j1 !is String || j2 !is String) {
+            println("Field $currentPath marked as 'trim' but is not string!")
+        } else {
+            proc1 = j1.trim()
+            proc2 = j2.trim()
+        }
+    }
+
+    return when (proc1) {
+        is JsonArray<*> -> false
+        is JsonObject -> false
+        else -> {
+            if (proc1 == proc2) true
+            else println("Values at $currentPath differ: \"$proc1\" and \"$proc2\"").let { false }
+        }
     }
 }
 
@@ -107,7 +121,7 @@ fun compare(
 
     if (!comparePresence(currentPath, j1, j2)) return
     if (!compareTypes(currentPath, j1, j2)) return
-    compareValue(currentPath, j1, j2)
+    compareValue(currentPath, j1, j2, curFilters.contains(FilterType.Trim))
     return recurse(j1, j2, filters, currentPath)
 }
 
@@ -124,6 +138,7 @@ enum class FilterType {
     TypeOnly,
     PresenceOnly,
     DifferingDefaults,
+    Trim,
     IgnoreAll;
 
     companion object {
@@ -132,6 +147,7 @@ enum class FilterType {
                 "type" -> TypeOnly
                 "presence" -> PresenceOnly
                 "ignore" -> IgnoreAll
+                "trim" -> Trim
                 else -> null
             }
         }
