@@ -19,11 +19,11 @@ fun main(args: Array<String>) {
 
 
 fun comparePresence(currentPath: String, j1: Any?, j2: Any?): Boolean {
-    if (j1 == null) {
+    if (j1 == null && j2 != null) {
         println("input1 is missing $currentPath")
         return false
     }
-    if (j2 == null) {
+    if (j2 == null && j1 != null) {
         println("input2 is missing $currentPath")
         return false
     }
